@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "stroke-api"
+version = "0.1.0"
+description = "BRIEF API"
+authors = ["Chaima425 <chaimaabdraouf@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.116.1"}
+pandas = "^2.3.1"
+streamlit = "^1.47.1"
+pyarrow = "^21.0.0"
+streamlit-aggrid = "^1.1.8"
+matplotlib = "^3.10.5"
+plotly-express = "^0.4.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.30.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
