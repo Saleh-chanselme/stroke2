@@ -6,15 +6,17 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 import matplotlib as plt
 import plotly.express as px
 import json
+from st_social_media_links import SocialMediaIcons
 
 
 
 # Make the entire app full width
 st.set_page_config(layout="wide") 
+    
 
 
 # App title 
-st.title("Welcome to Stroke dataset")
+st.title("Welcome to :red[Stroke] dataset")
 
 # setting the tabs (nav bar)
 home, data, visualization, statistics = st.tabs(["Home", "Data", "Visualization", "Statistics"])
@@ -22,7 +24,7 @@ home, data, visualization, statistics = st.tabs(["Home", "Data", "Visualization"
 # start home section 
 with home:
     st.header("Stroke Data Analysis App")
-    st.markdown("""Interactive web app that :red[visualizes] and :red[analyzes] patient data related to :red[stroke.]
+    st.markdown("""Interactive web app that :red[visualizes] and :red[analyzes] patient data related to :red[__stroke__.]
 Purpose: To explore stroke-related factors and present insights through clear visualizations.""")
 # end home section 
 
@@ -34,7 +36,7 @@ with data:
 
     # Form 1: Search by ID
     with st.form("id_form"):
-        st.caption("Search Patient By :red[Id]")
+        st.caption("Search Patient By :red[__Id__]")
         patient_id = st.text_input("Patient ID")
         submit_id = st.form_submit_button("search")
         
@@ -78,9 +80,13 @@ with data:
 #  Form 2: Patients filters 
     with st.form("my_form"):
         st.caption("Patients Filters")
-        gender = st.selectbox("Gender", ["", "Male", "Female"])
-        stroke = st.selectbox("Stroke", ["", "0", "1"])
-        max_age = st.number_input("Max Age", min_value=0, max_value=120)
+        gender = st.radio("Select Gender:",("Male", "Female", "Other"), horizontal=True)
+        stroke = st.radio("Filter by Stroke:",("No", "Yes"),horizontal=True)
+        # Convert to "0"/"1" if needed
+        stroke = "1" if stroke == "Yes" else "0"
+
+
+        max_age = age = st.slider("Select Age", 0, 100, 25)
         submit_filter = st.form_submit_button("Search")
 
     # ---- Fetch and display data if form submitted ----
@@ -116,7 +122,7 @@ with data:
                     gridOptions = gb.build()
 
                     st.subheader("Patients Data")
-                    AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=False, fit_columns_on_grid_load=True, height=700)
+                    AgGrid(df, gridOptions=gridOptions, enable_enterprise_modules=False, fit_columns_on_grid_load=True)
                 else:
                     st.info("No data found for these filters.")
 
@@ -207,3 +213,85 @@ with statistics:
     except requests.exceptions.ConnectionError:
         st.error("Could not connect to API. Make sure the backend is running.")
 # end statistic section --------------------------------------        
+
+with st.sidebar:
+    #st.header("Settings")
+    info, contact , support = st.tabs(["Info", "Contact us", "Help Center"])
+    with info:
+        st.subheader("Stroke Data Application")
+        st.markdown("""
+                    This application is designed to :
+Explore and visualize patient stroke data, 
+filter by ID, gender, or age, 
+and uncover key risk factors via FastAPI.
+
+
+Designed and developed by:
+- Saleh Chanselme
+- Chaima Haddad
+                    
+                    """)
+        
+        
+    with contact:
+            st.subheader("Drop Us A Line !")
+
+            social_media_links = [
+                "https://www.facebook.com",
+                "https://www.youtube.com",
+                "https://www.instagram.com",
+                "https://github.com/Saleh-chanselme",
+            ]
+
+            social_media_icons = SocialMediaIcons(social_media_links)
+
+            social_media_icons.render()
+            
+            
+    with support:
+        st.markdown('''
+                    
+                    If you have any questions, feedback, or encounter any issues while using the Stroke Project application, 
+                    we’re here to help.
+                    You can reach us through:
+                    ''')
+        st.write("	Email: saleh.chanselme@gmail.com")
+        st.write("	Email: chaimaabdraouf@gmail.com")
+        
+        
+
+
+# start footer ------------------------
+st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left:0;
+        width: 100%;
+        background-color: #f8f9fa;
+        color: #333;
+        text-align: center;
+        font-size: 14px;
+    }
+    .footer p {
+                font-weight: 700;
+
+    }
+    .footer span {
+        color: #B50000;
+    }
+        .footer span.simplon {
+        font-size : 20px
+    }
+    </style>
+
+    <div class="footer">
+        <p>© 2025 <span class="simplon">SIMPLON</span> Formation Centre – <span>Saleh CHANSELME</span>. All rights reserved.</p>
+        <p>This app is for educational purposes only and does not provide medical advice.</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+# end footer ---------------------
