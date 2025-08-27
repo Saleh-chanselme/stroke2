@@ -11,7 +11,17 @@ def filter_patient(
     stroke: Optional[int] = None,
     max_age: Optional[int] = None
 ):
+    """_summary_
 
+    Args:
+        gender (Optional[str], optional): 
+        stroke (Optional[int], optional): 
+        max_age (Optional[int], optional):
+
+    Returns:
+        list[dict]: Filtered patient records. 
+        Each dictionary represents a row from the stroke dataset with column names as keys (e.g., id, gender, age, stroke, etc.)
+    """
     df = stroke_data_df.copy()
     
     if stroke is not None :
@@ -28,7 +38,14 @@ def filter_patient(
 
 # function to get patient info by his ID 
 def get_info_by_id(patient_id: int):
-    
+    """_summary_
+
+    Args:
+        patient_id (int)
+
+    Returns:
+        patient info by his id
+    """
     df = stroke_data_df.copy()
     
     if patient_id is not None:

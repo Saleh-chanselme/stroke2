@@ -1,0 +1,20 @@
+site_name: Stroke App Documentation
+site_description: Stroke Prediction Project Documentation with FastAPI and Streamlit
+site_author: Saleh CHANSELME
+repo_url: https://github.com/Saleh-chanselme/stroke-api.git
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - import os
+            - sys.path.insert(0, os.path.abspath("."))
+
+nav:
+  - Info: index.md
+  - Home: home.md
+  - Data: data.md
+  - statistics: statistics.md
+  - visualization: visualization.md
